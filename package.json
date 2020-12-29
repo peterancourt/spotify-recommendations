@@ -10,8 +10,11 @@
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.12.10",
+        "@babel/plugin-transform-runtime": "^7.12.10",
         "@babel/preset-env": "^7.12.11",
         "babel-loader": "^8.2.2",
+        "babel-plugin-transform-regenerator": "^6.26.0",
+        "babel-polyfill": "^6.26.0",
         "css-loader": "^5.0.1",
         "html-webpack-plugin": "^4.5.0",
         "rimraf": "^3.0.2",
@@ -26,6 +29,7 @@
         "webpack-dev-server": "^3.11.0"
     },
     "dependencies": {
+        "@babel/runtime": "^7.12.5",
         "axios": "^0.21.1",
         "vue-router": "^3.4.9",
         "vuex": "^3.6.0"

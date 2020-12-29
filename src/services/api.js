@@ -27,3 +27,18 @@ export function loginSpotify() {
 
     window.location = url;
 }
+
+export async function getProfileInfo(token) {
+    try {
+        let res = axios({
+            method: 'get',
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return res;
+    } catch(error) {
+        console.log(error);
+    }
+}

@@ -2,6 +2,7 @@
     <div id="app">
         <Header></Header>
         <Login v-if="!checkAccessToken"></Login>
+        <Search v-else></Search>
     </div>
 </template>
 
@@ -10,6 +11,7 @@ import Header from './components/Header.vue';
 import Search from './components/Search.vue';
 import Results from './components/Results.vue';
 import Login from './components/Login.vue';
+import { getProfileInfo } from './services/api'
 
 export default {
     components: {
@@ -25,14 +27,20 @@ export default {
     },
     computed: {
         checkAccessToken() {
-            return this.$store.state.accessToken;
+            return this.$store.getters.getAccessToken;
         },
-        hashExists() {
-            return Boolean(window.location.hash)
-        }
     },
-    methods: {
-        
+    mounted() {
+        const authInfo = window.location.hash.substr(1).split('&');
+        const token = authInfo[0].substring(13);
+        if (token) {
+            this.$store.state.accessToken = token;
+            const spotifyResponse = getProfileInfo(token);
+            spotifyResponse.then((res) => {
+                console.log(res.data);
+                this.$store.state.user = res.data;
+            });
+        }
     }
 };
 </script>
