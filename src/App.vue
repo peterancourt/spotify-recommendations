@@ -11,7 +11,7 @@ import Header from './components/Header.vue';
 import Search from './components/Search.vue';
 import Results from './components/Results.vue';
 import Login from './components/Login.vue';
-import { getProfileInfo } from './services/api'
+import { getProfileInfo } from './services/api';
 
 export default {
     components: {
@@ -37,7 +37,6 @@ export default {
             this.$store.state.accessToken = token;
             const spotifyResponse = getProfileInfo(token);
             spotifyResponse.then((res) => {
-                console.log(res.data);
                 this.$store.state.user = res.data;
             });
         }

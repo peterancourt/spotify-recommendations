@@ -42,3 +42,19 @@ export async function getProfileInfo(token) {
         console.log(error);
     }
 }
+
+export async function getArtistId(artist, token) {
+    const encodedArtist = encodeURIComponent(artist);
+    try {
+        let res = axios({
+            method: 'get',
+            url: `https://api.spotify.com/v1/search?q=${encodedArtist}&type=artist`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return res;
+    } catch(error) {
+        console.log(error);
+    }
+}

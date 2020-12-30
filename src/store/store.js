@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         accessToken: '',
-        user: {}
+        user: {},
+        artists: []
     },
     getters: {
         getAccessToken: (state) => {
@@ -14,6 +15,11 @@ export const store = new Vuex.Store({
         },
         getUserInfo: (state) => {
             return state.user;
+        }
+    },
+    mutations: {
+        addArtist(state, artist) {
+            state.artists.push(artist);
         }
     }
 })
