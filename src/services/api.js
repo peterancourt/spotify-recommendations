@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { store } from '../store/store';
 const client_id = '4b12ffafaa604b868ba3dab6d2b5b151'; // Your client id
 const redirect_uri = 'http://localhost:8080/'; // Your redirect uri
 const state = generateRandomString(16);
@@ -43,20 +44,26 @@ export async function getProfileInfo(token) {
     }
 }
 
-export async function getArtistId(artist, token) {
-    const encodedArtist = encodeURIComponent(artist);
-    try {
-        let res = axios({
+export async function getArtistId(artists, token) {
+    // const encodedArtist = encodeURIComponent(artist);
+    const artistIds = [];
+
+    for (let index = 0; index < artists.length; index++) {
+        const encodedArtist = encodeURIComponent(artists[index]);
+        let res = await axios({
             method: 'get',
             url: `https://api.spotify.com/v1/search?q=${encodedArtist}&type=artist`,
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-        return res;
-    } catch(error) {
-        console.log(error);
+        artistIds.push({
+            artistName: res.data.artists.items[0].name,
+            id: res.data.artists.items[0].id
+        });
     }
+    store.commit('addArtists', artistIds);
+    store.commit('setSearchComplete');
 }
 
 export async function getRecommendations(ids, token) {
@@ -64,7 +71,7 @@ export async function getRecommendations(ids, token) {
     try {
         let res = axios({
             method: 'get',
-            url: `https://api.spotify.com/v1/recommendations?seed_artists=${encodedIds}`,
+            url: `https://api.spotify.com/v1/recommendations?seed_artists=${encodedIds}&limit=10`,
             headers: {
                 Authorization: `Bearer ${token}`
             }

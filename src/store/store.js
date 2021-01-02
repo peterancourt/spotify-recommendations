@@ -23,12 +23,14 @@ export const store = new Vuex.Store({
         }, 
         getSearchComplete: (state) => {
             return state.searchComplete
+        },
+        getRecommendations: (state) => {
+            return state.recommendations;
         }
     },
     mutations: {
         addArtists(state, artists) {
             state.artists = artists;
-            state.searchComplete = true;
         },
         addRecommendations(state, recs) {
             state.recommendations = recs;

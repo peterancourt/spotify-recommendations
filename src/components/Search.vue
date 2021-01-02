@@ -21,20 +21,7 @@
         },
         methods: {
             searchSubmit(event) {
-                this.separateArtists.forEach((element) => {
-                    const artistId = getArtistId(element, this.$store.getters.getAccessToken);
-                    artistId.then((res) => {
-                        if(res.data.artists.items.length) {
-                            this.artistsArray.push({
-                                artistName: res.data.artists.items[0].name,
-                                id: res.data.artists.items[0].id
-                            });
-                        }
-                    });
-                })
-                this.$store.state.artists = this.artistsArray;
-                this.$store.state.searchComplete = true;
-                //this.$store.commit('addArtists', this.artistsArray);
+                getArtistId(this.separateArtists, this.$store.getters.getAccessToken);
             }
         },
         computed: {
