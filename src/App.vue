@@ -3,6 +3,7 @@
         <Header></Header>
         <Login v-if="!checkAccessToken"></Login>
         <Search v-else></Search>
+        <Results v-if="isSearchComplete"></Results>
     </div>
 </template>
 
@@ -29,6 +30,9 @@ export default {
         checkAccessToken() {
             return this.$store.getters.getAccessToken;
         },
+        isSearchComplete() {
+            return this.$store.getters.getSearchComplete;
+        }
     },
     mounted() {
         const authInfo = window.location.hash.substr(1).split('&');

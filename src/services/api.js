@@ -58,3 +58,19 @@ export async function getArtistId(artist, token) {
         console.log(error);
     }
 }
+
+export async function getRecommendations(ids, token) {
+    const encodedIds = encodeURIComponent(ids.join());
+    try {
+        let res = axios({
+            method: 'get',
+            url: `https://api.spotify.com/v1/recommendations?seed_artists=${encodedIds}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return res;
+    } catch(error) {
+        console.log(error);
+    }
+}

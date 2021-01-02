@@ -7,7 +7,9 @@ export const store = new Vuex.Store({
     state: {
         accessToken: '',
         user: {},
-        artists: []
+        artists: [],
+        searchComplete: false,
+        recommendations: [],
     },
     getters: {
         getAccessToken: (state) => {
@@ -15,11 +17,24 @@ export const store = new Vuex.Store({
         },
         getUserInfo: (state) => {
             return state.user;
+        },
+        getArtists: (state) => {
+            return state.artists;
+        }, 
+        getSearchComplete: (state) => {
+            return state.searchComplete
         }
     },
     mutations: {
-        addArtist(state, artist) {
-            state.artists.push(artist);
+        addArtists(state, artists) {
+            state.artists = artists;
+            state.searchComplete = true;
+        },
+        addRecommendations(state, recs) {
+            state.recommendations = recs;
+        },
+        setSearchComplete(state) {
+            state.searchComplete = true;
         }
     }
 })
