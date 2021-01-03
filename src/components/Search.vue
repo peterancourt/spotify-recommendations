@@ -26,8 +26,8 @@
         methods: {
             searchSubmit() {
                 if (this.$store.getters.getSearchComplete) {
-                    this.$store.commit('resetSearchComplete');
-                    this.$store.commit('resetRecommendations');
+                    this.$store.commit('setSearchCompleteValue', false);
+                    this.$store.commit('addRecommendations', []);
                     this.$store.commit('resetError', 'search');
                     this.$store.commit('resetError', 'recommendations');
                 }

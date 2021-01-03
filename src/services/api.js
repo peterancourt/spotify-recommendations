@@ -28,14 +28,14 @@ export function loginSpotify() {
 
 export async function getProfileInfo(token) {
     try {
-        let res = axios({
+        let res = await axios({
             method: 'get',
             url: 'https://api.spotify.com/v1/me',
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
-        return res;
+        store.commit('setUserName', res.data.display_name);
     } catch(error) {
         console.log(error);
     }
@@ -64,7 +64,7 @@ export async function getArtistId(artists, token) {
         }
     }
     store.commit('addArtists', artistIds);
-    store.commit('setSearchComplete');
+    store.commit('setSearchCompleteValue', true);
 }
 
 export async function getRecommendations(ids, token) {

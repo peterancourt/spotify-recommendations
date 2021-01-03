@@ -41,10 +41,7 @@ export default {
         const token = authInfo[0].substring(13);
         if (token) {
             this.$store.state.accessToken = token;
-            const spotifyResponse = getProfileInfo(token);
-            spotifyResponse.then((res) => {
-                this.$store.state.user = res.data;
-            });
+            getProfileInfo(token);
         }
     }
 };

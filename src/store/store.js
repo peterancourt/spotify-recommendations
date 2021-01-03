@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         accessToken: '',
-        user: {},
+        userName: '',
         artists: [],
         searchComplete: false,
         recommendations: [],
@@ -22,7 +22,7 @@ export const store = new Vuex.Store({
             return state.accessToken;
         },
         getUserName: (state) => {
-            return state.user.display_name;
+            return state.userName;
         },
         getArtists: (state) => {
             return state.artists;
@@ -38,20 +38,17 @@ export const store = new Vuex.Store({
         }
     },
     mutations: {
+        setUserName(state, name) {
+            state.userName = name;
+        },
         addArtists(state, artists) {
             state.artists = artists;
         },
         addRecommendations(state, recs) {
             state.recommendations = recs;
         },
-        resetRecommendations(state) {
-            state.recommendations = [];
-        }, 
-        setSearchComplete(state) {
-            state.searchComplete = true;
-        },
-        resetSearchComplete(state) {
-            state.searchComplete = false;
+        setSearchCompleteValue(state, value) {
+            state.searchComplete = value;
         },
         setError(state, error) {
             state.errors[error] = true;
