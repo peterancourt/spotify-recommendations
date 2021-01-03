@@ -5,11 +5,11 @@ module.exports = {
         // enable additional rules
         "indent": ["error", 4],
         "linebreak-style": ["error", "unix",],
-        "quotes": ["error", "double",],
+        "quotes": "off",
         "semi": ["error", "always",],
 
         // override default options for rules from base configurations
-        "comma-dangle": ["error", "always",],
+        "comma-dangle": "off",
         "no-cond-assign": ["error", "always",],
 
         // disable rules from base configurations

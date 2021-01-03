@@ -10,6 +10,12 @@ export const store = new Vuex.Store({
         artists: [],
         searchComplete: false,
         recommendations: [],
+        errors: {
+            login: false,
+            profileInfo: false,
+            search: false,
+            recommendations: false
+        }
     },
     getters: {
         getAccessToken: (state) => {
@@ -22,10 +28,13 @@ export const store = new Vuex.Store({
             return state.artists;
         }, 
         getSearchComplete: (state) => {
-            return state.searchComplete
+            return state.searchComplete;
         },
         getRecommendations: (state) => {
             return state.recommendations;
+        },
+        getErrorState: (state) => {
+            return state.errors;
         }
     },
     mutations: {
@@ -35,8 +44,28 @@ export const store = new Vuex.Store({
         addRecommendations(state, recs) {
             state.recommendations = recs;
         },
+        resetRecommendations(state) {
+            state.recommendations = [];
+        }, 
         setSearchComplete(state) {
             state.searchComplete = true;
+        },
+        resetSearchComplete(state) {
+            state.searchComplete = false;
+        },
+        setError(state, error) {
+            state.errors[error] = true;
+        },
+        resetError(state, error) {
+            state.errors[error] = false;
+        }
+    },
+    actions: {
+        setError({ commit }, error) {
+            commit('setError', error);
+        },
+        resetError({ commit }, error) {
+            commit('resetError', error);
         }
     }
-})
+});

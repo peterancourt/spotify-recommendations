@@ -10,10 +10,10 @@ function generateRandomString(length) {
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (var i = 0; i < length; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
-};
+}
 
 export function loginSpotify() {
     var url = 'https://accounts.spotify.com/authorize';
@@ -34,7 +34,7 @@ export async function getProfileInfo(token) {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        })
+        });
         return res;
     } catch(error) {
         console.log(error);
@@ -46,17 +46,22 @@ export async function getArtistId(artists, token) {
 
     for (let index = 0; index < artists.length; index++) {
         const encodedArtist = encodeURIComponent(artists[index]);
-        let res = await axios({
-            method: 'get',
-            url: `https://api.spotify.com/v1/search?q=${encodedArtist}&type=artist`,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        artistIds.push({
-            artistName: res.data.artists.items[0].name,
-            id: res.data.artists.items[0].id
-        });
+        try {
+            let res = await axios({
+                method: 'get',
+                url: `https://api.spotify.com/v1/search?q=${encodedArtist}&type=artist`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            artistIds.push({
+                artistName: res.data.artists.items[0].name,
+                id: res.data.artists.items[0].id
+            });
+        }
+        catch(error) {
+            store.dispatch('setError', 'search');
+        }
     }
     store.commit('addArtists', artistIds);
     store.commit('setSearchComplete');
@@ -65,15 +70,16 @@ export async function getArtistId(artists, token) {
 export async function getRecommendations(ids, token) {
     const encodedIds = encodeURIComponent(ids.join());
     try {
-        let res = axios({
+        let res = await axios({
             method: 'get',
             url: `https://api.spotify.com/v1/recommendations?seed_artists=${encodedIds}&limit=10`,
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        })
-        return res;
+        });
+        store.commit('addRecommendations', res.data.tracks);
+        
     } catch(error) {
-        console.log(error);
+        store.dispatch('setError', 'recommendations');
     }
 }

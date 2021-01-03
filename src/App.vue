@@ -52,7 +52,6 @@ export default {
 
 <style lang="scss">
     #app {
-        font-size: 18px;
         font-family: 'Roboto', sans-serif;
     }
     .container {
@@ -64,5 +63,17 @@ export default {
     }
     .app-grid {
         grid-area: mainArea;
+    }
+    .has-error {
+        background-color: red;
+        color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        max-width: 500px;
+    }
+    .o-button {
+        background-color: black;
+        color: white;
+        padding: 10px 20px
     }
 </style>
