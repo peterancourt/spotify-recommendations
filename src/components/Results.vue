@@ -2,12 +2,8 @@
     <div>
         <div v-if="trackRecommendations.length">
             <div v-for="track in trackRecommendations" :key="track.id" class="c-result-element">
-                <h2>
-                    Title: {{ track.name }}
-                </h2>
-                <h3>
-                    Artist: {{ mapArtistNames(track.artists) }}
-                </h3>
+                <h2>Title: {{ track.name }}</h2>
+                <h3>Artist: {{ mapArtistNames(track.artists) }}</h3>
                 <a target="_blank" rel="noopener noreferrer" :href="track.external_urls.spotify">
                     Listen on Spotify
                 </a>

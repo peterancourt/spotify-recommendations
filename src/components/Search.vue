@@ -1,11 +1,9 @@
 <template>
     <div>
-        <form>
-            <div class="c-artist-input">
-                <label for="artists">Artists</label>
-                <input id="artists" type="text" v-model.lazy="searchString">
-            </div>
-            <button @click.prevent="searchSubmit">Submit</button>
+        <form class="form-container">
+            <label for="artists" class="c-artist-label">Artists</label>
+            <input id="artists" type="text" v-model.lazy="searchString" class="c-artist-input">
+            <button @click.prevent="searchSubmit" class="c-artist-button">Submit</button>
         </form>
     </div>
 </template>
@@ -33,5 +31,24 @@
 </script>
 
 <style lang="scss">
+    .form-container {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas:
+            "label"
+            "input"
+            "button";
+    }
+    .c-artist-label {
+        grid-area: label;
+    }
+    .c-artist-input {
+        grid-area: input;
+        padding: 10px 10px;
+        margin-bottom: 10px;
+    }
+    .c-artist-button {
+        grid-area: button;
+    }
 
 </style>

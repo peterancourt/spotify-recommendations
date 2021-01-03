@@ -15,8 +15,8 @@ export const store = new Vuex.Store({
         getAccessToken: (state) => {
             return state.accessToken;
         },
-        getUserInfo: (state) => {
-            return state.user;
+        getUserName: (state) => {
+            return state.user.display_name;
         },
         getArtists: (state) => {
             return state.artists;

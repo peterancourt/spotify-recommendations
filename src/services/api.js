@@ -16,9 +16,6 @@ function generateRandomString(length) {
 };
 
 export function loginSpotify() {
-    var state = generateRandomString(16);
-    var scope = 'user-read-private user-read-email';
-    
     var url = 'https://accounts.spotify.com/authorize';
     url += '?response_type=token';
     url += '&client_id=' + encodeURIComponent(client_id);
@@ -26,7 +23,7 @@ export function loginSpotify() {
     url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
     url += '&state=' + encodeURIComponent(state);
 
-    window.location = url;
+    window.location.replace(url);
 }
 
 export async function getProfileInfo(token) {
@@ -45,7 +42,6 @@ export async function getProfileInfo(token) {
 }
 
 export async function getArtistId(artists, token) {
-    // const encodedArtist = encodeURIComponent(artist);
     const artistIds = [];
 
     for (let index = 0; index < artists.length; index++) {

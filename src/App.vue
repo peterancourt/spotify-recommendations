@@ -1,9 +1,11 @@
 <template>
-    <div id="app">
-        <Header></Header>
-        <Login v-if="!checkAccessToken"></Login>
-        <Search v-else></Search>
-        <Results v-if="isSearchComplete"></Results>
+    <div id="app" class="container">
+        <div class="app-grid">
+            <Header></Header>
+            <Login v-if="!checkAccessToken"></Login>
+            <Search v-else></Search>
+            <Results v-if="isSearchComplete"></Results>
+        </div>
     </div>
 </template>
 
@@ -52,6 +54,15 @@ export default {
     #app {
         font-size: 18px;
         font-family: 'Roboto', sans-serif;
-        color: blue;
+    }
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: "leftMargin mainArea rightMargin";
+
+    }
+    .app-grid {
+        grid-area: mainArea;
     }
 </style>
