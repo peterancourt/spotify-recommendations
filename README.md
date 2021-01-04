@@ -15,7 +15,7 @@ To run this app, you will need Node and NPM installed.
 ### Installation and Building
 **Installation Commands**
 ```
-git clone git@github.com:peterancourt/spotify-recommendations.git
+git clone https://github.com/peterancourt/spotify-recommendations.git
 cd spotify-recommendations
 npm install
 ```
