@@ -5,14 +5,14 @@
 </template>
 
 <script>
-    import { loginSpotify } from '../services/api.js';
-    export default {
-        methods: {
-            spotifyLogin() {
-                loginSpotify();
-            }
+import { loginSpotify } from '../services/api.js';
+export default {
+    methods: {
+        spotifyLogin() {
+            loginSpotify();
         }
-    };
+    }
+};
 </script>
 
 <style lang="scss">

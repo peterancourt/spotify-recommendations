@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-if="trackRecommendations.length">
-            <div v-for="track in trackRecommendations" :key="track.id" class="c-result-element">
+        <div v-if="getRecommendations.length">
+            <div v-for="track in getRecommendations" :key="track.id" class="c-result-element">
                 <h2>Title: {{ track.name }}</h2>
                 <h3>Artist: {{ mapArtistNames(track.artists) }}</h3>
                 <a target="_blank" rel="noopener noreferrer" :href="track.external_urls.spotify">
@@ -21,41 +21,44 @@
 </template>
 
 <script>
-    import { getRecommendations } from '../services/api';
-    export default {
-        data() {
-            return {
-                errorMessage: 'An error ocurred while getting recommendations. Please try again.',
-                noResultsMessage: 'Sorry, no results based on your search. Please try again',
-            }
-        },
-        methods: {
-            mapArtistNames(artistArray) {
-                const artistNames = artistArray.map((artist) => {
-                    return artist.name;
-                })
-                return artistNames.join(', ');
-            }
-        },
-        mounted() {
-            const ids = (this.$store.getters.getArtists).map(a => a.id);
-            const idString = encodeURIComponent(ids.join());
-            const token = this.$store.getters.getAccessToken;
-            
-            if(ids.length) {
-                getRecommendations(ids, token);
-            } 
-        },
-        computed: {
-            trackRecommendations() {
-                return this.$store.getters.getRecommendations;
-            },
-            isRecommendationError() {
-                const errors = this.$store.getters.getErrorState;
-                return errors.recommendations;
-            }
+import { mapGetters } from 'vuex';
+import { getRecommendations } from '../services/api';
+export default {
+    data() {
+        return {
+            errorMessage: 'An error ocurred while getting recommendations. Please try again.',
+            noResultsMessage: 'Sorry, no results based on your search. Please try again',
+        };
+    },
+    methods: {
+        mapArtistNames(artistArray) {
+            const artistNames = artistArray.map((artist) => {
+                return artist.name;
+            });
+            return artistNames.join(', ');
+        }
+    },
+    mounted() {
+        const ids = (this.getArtists).map(a => a.id);
+        const token = this.getAccessToken;
+
+        if(ids.length) {
+            getRecommendations(ids, token);
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'getArtists',
+            'getAccessToken',
+            'getRecommendations',
+            'getErrorState'
+        ]),
+        isRecommendationError() {
+            const errors = this.getErrorState;
+            return errors.recommendations;
         }
     }
+};
 </script>
 
 <style lang="scss">

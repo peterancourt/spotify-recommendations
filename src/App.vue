@@ -2,9 +2,9 @@
     <div id="app" class="container">
         <div class="app-grid">
             <Header></Header>
-            <Login v-if="!checkAccessToken"></Login>
+            <Login v-if="!getAccessToken"></Login>
             <Search v-else></Search>
-            <Results v-if="isSearchComplete"></Results>
+            <Results v-if="getSearchComplete"></Results>
         </div>
     </div>
 </template>
@@ -15,6 +15,7 @@ import Search from './components/Search.vue';
 import Results from './components/Results.vue';
 import Login from './components/Login.vue';
 import { getProfileInfo } from './services/api';
+import { mapGetters } from 'vuex';
 
 export default {
     components: {
@@ -29,12 +30,10 @@ export default {
         };
     },
     computed: {
-        checkAccessToken() {
-            return this.$store.getters.getAccessToken;
-        },
-        isSearchComplete() {
-            return this.$store.getters.getSearchComplete;
-        }
+        ...mapGetters([
+            'getAccessToken',
+            'getSearchComplete'
+        ])
     },
     mounted() {
         const authInfo = window.location.hash.substr(1).split('&');

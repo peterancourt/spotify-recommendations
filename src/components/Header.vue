@@ -1,12 +1,13 @@
 <template>
     <div>
         <h1>Song Recommendations</h1>
-        <p v-if="accessToken">{{welcomeMessage}}</p>
+        <p v-if="getAccessToken">{{welcomeMessage}}</p>
         <p v-else>{{loginMessage}}</p>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -14,14 +15,12 @@ export default {
         };
     },
     computed: {
-        userName() {
-            return this.$store.getters.getUserName;
-        },
-        accessToken() {
-            return this.$store.getters.getAccessToken;
-        },
+        ...mapGetters([
+            'getUserName',
+            'getAccessToken'
+        ]),
         welcomeMessage() {
-            return `Welcome, ${this.userName}! To get started with Spotify recommendations, enter up to 5 artists separated by a comma below`
+            return `Welcome, ${this.getUserName}! To get started with Spotify recommendations, enter up to 5 artists separated by a comma below`
         }
     }
 };

@@ -14,36 +14,47 @@
 </template>
 
 <script>
-    import { getArtistId } from '../services/api'
-    export default {
-        data() {
-            return {
-                searchString: '',
-                artistsArray: [],
-                searchError: 'An error occurred on search - please adjust search and try again'
+import { mapGetters, mapMutations } from 'vuex';
+import { getArtistId } from '../services/api'
+export default {
+    data() {
+        return {
+            searchString: '',
+            artistsArray: [],
+            searchError: 'An error occurred on search - please adjust search and try again'
+        };
+    },
+    methods: {
+        ...mapMutations([
+            'setSearchCompleteValue',
+            'addRecommendations',
+            'resetError'
+        ]),
+        searchSubmit() {
+            if (this.getSearchComplete) {
+                this.setSearchCompleteValue(false);
+                this.addRecommendations([]);
+                this.resetError('search');
+                this.resetError('recommendations');
             }
+            getArtistId(this.separateArtists, this.getAccessToken);
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'getErrorState',
+            'getSearchComplete',
+            'getAccessToken'
+        ]),
+        separateArtists() {
+            return this.searchString.split(',');
         },
-        methods: {
-            searchSubmit() {
-                if (this.$store.getters.getSearchComplete) {
-                    this.$store.commit('setSearchCompleteValue', false);
-                    this.$store.commit('addRecommendations', []);
-                    this.$store.commit('resetError', 'search');
-                    this.$store.commit('resetError', 'recommendations');
-                }
-                getArtistId(this.separateArtists, this.$store.getters.getAccessToken);
-            }
-        },
-        computed: {
-            separateArtists() {
-                return this.searchString.split(',');
-            },
-            isSearchError() {
-                const errors = this.$store.getters.getErrorState;
-                return errors.search;
-            }
+        isSearchError() {
+            const errors = this.getErrorState;
+            return errors.search;
         }
     }
+};
 </script>
 
 <style lang="scss">
