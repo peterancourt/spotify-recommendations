@@ -20,7 +20,7 @@ export default {
             'getAccessToken'
         ]),
         welcomeMessage() {
-            return `Welcome, ${this.getUserName}! To get started with Spotify recommendations, enter up to 5 artists separated by a comma below`
+            return `Welcome, ${this.getUserName}! To get started with song recommendations from Spotify, enter up to 5 artists separated by a comma below`;
         }
     }
 };

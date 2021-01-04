@@ -5,6 +5,7 @@ const redirect_uri = 'http://localhost:8080/'; // Your redirect uri
 const state = generateRandomString(16);
 const scope = 'user-read-private user-read-email';
 
+// From Spotify - generates a random string to use as the 'state' param on navigating to /authorize
 function generateRandomString(length) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -15,6 +16,10 @@ function generateRandomString(length) {
     return text;
 }
 
+// Authenticates user with Spotify's implicit grant method, which allows for authentication without
+// server side code.
+// Navigates to Spotify Auth page - allows user to login and redirects back to http://localhost:8080
+// with an auth token in the url
 export function loginSpotify() {
     var url = 'https://accounts.spotify.com/authorize';
     url += '?response_type=token';
@@ -26,6 +31,7 @@ export function loginSpotify() {
     window.location.replace(url);
 }
 
+// Makes a request to /me endpoint to get the user's profile info - stores user's display name in store
 export async function getProfileInfo(token) {
     try {
         let res = await axios({
@@ -41,6 +47,10 @@ export async function getProfileInfo(token) {
     }
 }
 
+// Calls /search endpoint to get Spotify ids for all artists entered by user (call to recommendations
+// requires ids as a parameter)
+// Stores artist name and id in an array in store
+// Sets an error value in store if axios returns an error
 export async function getArtistId(artists, token) {
     const artistIds = [];
 
@@ -67,6 +77,9 @@ export async function getArtistId(artists, token) {
     store.commit('setSearchCompleteValue', true);
 }
 
+// Calls /recommendations endpoint based on artist ids
+// Stores recommendations data in an array in store
+// Sets an error value in store if axios returns an error
 export async function getRecommendations(ids, token) {
     const encodedIds = encodeURIComponent(ids.join());
     try {

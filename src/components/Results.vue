@@ -27,7 +27,7 @@ export default {
     data() {
         return {
             errorMessage: 'An error ocurred while getting recommendations. Please try again.',
-            noResultsMessage: 'Sorry, no results based on your search. Please try again',
+            noResultsMessage: 'Sorry, no results based on your search. Please try again.',
         };
     },
     methods: {
